@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>Wedding Countdown — 1 Dec 2025</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --muted: #8b8b8b;
+      --primary: #222222;
+      --rose: #ff6b9a;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;min-height:100vh;display:flex;align-items:center;justify-content:center;
+      background: linear-gradient(135deg,#ffe6f0 0%,#e6f7ff 100%);
+      font-family: 'Inter',system-ui,Segoe UI,Roboto,Arial;
+      color:var(--primary);
+      padding:12px;
+      position:relative;
+      overflow:hidden;
+    }
+    body::before{
+      content:"";
+      position:absolute;inset:0;
+      background: radial-gradient(circle at top left, rgba(255,107,154,0.15), transparent 70%),
+                  radial-gradient(circle at bottom right, rgba(103,211,255,0.15), transparent 70%);
+      z-index:0;
+    }
+
+    /* Floating petals & hearts */
+    .floating{
+      position:absolute;
+      opacity:0;
+      animation:float linear infinite;
+      z-index:0;
+      pointer-events:none;
+    }
+    @keyframes float {
+      0% {transform:translateY(100vh) scale(0.8); opacity:0;}
+      10% {opacity:0.7;}
+      50% {opacity:1;}
+      90% {opacity:0.7;}
+      100% {transform:translateY(-10vh) scale(1.1); opacity:0;}
+    }
+
+    .card{
+      width:100%;
+      background:rgba(255,255,255,0.92);
+      backdrop-filter:blur(8px);
+      border-radius:16px;
+      box-shadow:0 6px 20px rgba(32,45,80,0.15);
+      padding:20px;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      position:relative;
+      z-index:1;
+      text-align:center;
+    }
+
+    h1{font-family:'Playfair Display',serif;margin:0;font-size:22px;line-height:1.4}
+    .lead{margin:8px 0 16px;color:var(--muted);font-size:14px}
+
+    .heart{
+      font-size:26px;color:var(--rose);animation:beat 1.1s infinite;
+    }
+    @keyframes beat{0%{transform:scale(1)}40%{transform:scale(1.15)}100%{transform:scale(1)}}
+
+    .countdown{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:12px}
+    .timebox{background:#fff;padding:12px;border-radius:10px;min-width:65px;flex:1;text-align:center;box-shadow:0 2px 6px rgba(0,0,0,0.05)}
+    .num{font-size:20px;font-weight:700}
+    .label{font-size:11px;color:var(--muted);margin-top:4px}
+
+    .date-note{margin-top:14px;color:var(--muted);font-size:12px}
+    .milestone{margin-top:16px;padding:12px;border-left:3px solid var(--rose);background:#fff8fb;border-radius:10px;font-size:13px}
+    .milestone strong{color:var(--rose)}
+
+    .celebrate{display:none;margin-top:14px;padding:10px;border-radius:8px;background:linear-gradient(90deg,#fff0f7,#fff5f0);color:#7b2b3a;font-size:13px}
+
+    .footer{margin-top:18px;font-size:11px;color:var(--muted)}
+
+    /* Progress section */
+    .progress-wrap{margin-top:18px}
+    svg#progress{width:120px;height:120px}
+    text#pct{font-size:16px}
+
+    /* Button */
+    #enterBtn {
+      margin-top:18px;
+      width:100%;
+      padding:14px;
+      font-size:15px;
+      font-weight:600;
+      border:none;
+      border-radius:12px;
+      background:linear-gradient(90deg,#ff9bb7,#67d3ff);
+      color:#fff;
+      cursor:pointer;
+      box-shadow:0 4px 12px rgba(0,0,0,0.15);
+      transition: transform 0.2s;
+    }
+    #enterBtn:active { transform: scale(0.97); }
+
+    /* Fade animations */
+    .fade-out { animation: fadeOut 0.6s forwards; }
+    .fade-in  { animation: fadeIn 0.6s forwards; }
+    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; visibility: hidden; } }
+    @keyframes fadeIn  { from { opacity: 0; } to { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <!-- First Page -->
+  <div id="welcome" class="card">
+    <h1>Welcome to Our Forever 💍</h1>
+    <p class="lead">Mirza Shahbaz Baig & Muftiya Tabinda Amjadi 💖<br>A journey of love begins here.</p>
+    <button id="enterBtn">💖 Enter Our Journey 💖</button>
+  </div>
+
+  <!-- Countdown Page -->
+  <div id="countdownPage" style="display:none; opacity:0;">
+    <div class="card">
+      <h1>Counting down to our day <span class="heart">❤</span></h1>
+      <p class="lead">December 1, 2025 — the day <strong>Mirza Shahbaz Baig</strong> & <strong>Muftiya Tabinda Amjadi</strong> say "Qubool Hai".</p>
+
+      <div id="countdown" class="countdown">
+        <div class="timebox"><div id="days" class="num">0</div><div class="label">Days</div></div>
+        <div class="timebox"><div id="hours" class="num">0</div><div class="label">Hours</div></div>
+        <div class="timebox"><div id="minutes" class="num">0</div><div class="label">Minutes</div></div>
+        <div class="timebox"><div id="seconds" class="num">0</div><div class="label">Seconds</div></div>
+      </div>
+
+      <div class="date-note">Target: <strong>December 1, 2025</strong></div>
+      <div class="milestone">Our journey began on <strong>26th August 2024</strong> — and now we're counting down to forever. ✨</div>
+      <div id="celebrate" class="celebrate">It's here — Mirza Shahbaz Baig & Muftiya Tabinda Amjadi are married! ❤️ Congratulations!</div>
+
+      <div class="progress-wrap">
+        <svg id="progress" viewBox="0 0 120 120">
+          <defs><linearGradient id="g" x1="0" x2="1"><stop offset="0" stop-color="#ff9bb7"/><stop offset="1" stop-color="#67d3ff"/></linearGradient></defs>
+          <circle r="48" cx="60" cy="60" stroke="#eee" stroke-width="12" fill="transparent" />
+          <circle id="arc" r="48" cx="60" cy="60" stroke="url(#g)" stroke-width="12" fill="transparent" stroke-linecap="round" transform="rotate(-90 60 60)" stroke-dasharray="301.6" stroke-dashoffset="301.6"/>
+          <text id="pct" x="60" y="66" font-family="Inter,Arial" text-anchor="middle" fill="#333">0%</text>
+        </svg>
+      </div>
+
+      <div class="footer">Made with love — Mirza Shahbaz ✨</div>
+    </div>
+  </div>
+
+  <script>
+    const start = new Date(2024, 7, 26, 0, 0, 0);
+    const target = new Date(2025, 11, 1, 0, 0, 0);
+
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+    const arcEl = document.getElementById('arc');
+    const pctEl = document.getElementById('pct');
+    const celebrateEl = document.getElementById('celebrate');
+
+    let currentPerc = 0;
+
+    function update(){
+      const now = new Date();
+      let diff = target - now;
+
+      if (diff <= 0){
+        daysEl.textContent = '0';
+        hoursEl.textContent = '0';
+        minutesEl.textContent = '0';
+        secondsEl.textContent = '0';
+        celebrateEl.style.display = 'block';
+        arcEl.style.strokeDashoffset = 0;
+        pctEl.textContent = '100%';
+        return;
+      }
+
+      const sec = Math.floor(diff/1000) % 60;
+      const min = Math.floor(diff/1000/60) % 60;
+      const hr  = Math.floor(diff/1000/60/60) % 24;
+      const day = Math.floor(diff/1000/60/60/24);
+
+      daysEl.textContent = day;
+      hoursEl.textContent = String(hr).padStart(2,'0');
+      minutesEl.textContent = String(min).padStart(2,'0');
+      secondsEl.textContent = String(sec).padStart(2,'0');
+
+      const totalDuration = target - start;
+      const elapsed = now - start;
+      currentPerc = Math.min(100, Math.max(0, Math.round(100 * (elapsed / totalDuration))));
+    }
+
+    function animateProgress(){
+      let progress = 0;
+      const circumference = 2 * Math.PI * 48;
+      const step = currentPerc / 60;
+      const interval = setInterval(() => {
+        progress += step;
+        if (progress >= currentPerc){
+          progress = currentPerc;
+          clearInterval(interval);
+        }
+        const offset = circumference * (1 - progress/100);
+        arcEl.style.strokeDashoffset = offset;
+        pctEl.textContent = Math.round(progress) + '%';
+      }, 16);
+    }
+
+    document.getElementById('enterBtn').addEventListener('click', () => {
+      const welcome = document.getElementById('welcome');
+      const countdownPage = document.getElementById('countdownPage');
+
+      welcome.classList.add('fade-out');
+      setTimeout(() => {
+        welcome.style.display = 'none';
+        countdownPage.style.display = 'block';
+        countdownPage.classList.add('fade-in');
+        update();
+        animateProgress();
+      }, 600);
+    });
+
+    update();
+    setInterval(update, 1000);
+
+    // Floating petals & hearts
+    const symbols = ['🌸','❤️','💖','✨'];
+    for (let i=0; i<20; i++){
+      const el = document.createElement('div');
+      el.className = 'floating';
+      el.textContent = symbols[Math.floor(Math.random()*symbols.length)];
+      el.style.left = Math.random()*100 + 'vw';
+      el.style.fontSize = (14 + Math.random()*16) + 'px';
+      el.style.animationDuration = (12 + Math.random()*10) + 's';
+      el.style.animationDelay = (-Math.random()*20) + 's';
+      document.body.appendChild(el);
+    }
+  </script>
+</body>
+</html>
